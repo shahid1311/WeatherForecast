@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Weather Forecast</string>
+    <string name="action_settings">Settings</string>
+    <string name="splashScreen">Splash Activity</string>
+    <string name="app_icon">application icon</string>
+    <string name="get_started">Let\'s get started</string>
+    <string name="cities_you_want">Enter cities below</string>
+    <string name="pune_mumbai">e.g. Pune, Mumbai</string>
+    <string name="or">--or--</string>
+    <string name="locate_me">Locate me</string>
+    <string name="weather_forecast_caps">WEATHER FORECAST</string>
+</resources>

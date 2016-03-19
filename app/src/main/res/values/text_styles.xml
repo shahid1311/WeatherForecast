@@ -15,12 +15,18 @@
 
 <resources>
 
-    <!-- This style is applied to Edit Texts with left drawable and white text box-->
+    <!-- This default style is applied to TextViews-->
     <style name="default_text" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans</item>
+    </style>
+
+    <!-- This default bold style is applied to TextViews with bold text-->
+    <style name="default_bold_text" parent="default_text">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- This style is applied to Edit Texts with left drawable and white text box-->

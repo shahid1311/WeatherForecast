@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import io.leftshift.weatherforecast.R;
+import io.leftshift.weatherforecast.util.DateUtil;
 
 /**
  * Created by Shahid on 13/3/2016.

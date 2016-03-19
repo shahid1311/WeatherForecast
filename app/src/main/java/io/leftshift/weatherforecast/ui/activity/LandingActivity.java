@@ -3,9 +3,13 @@ package io.leftshift.weatherforecast.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import io.leftshift.weatherforecast.R;
 import io.leftshift.weatherforecast.logger.Logger;
+import io.leftshift.weatherforecast.util.DateUtil;
 
 /**
  * Created by Shahid on 3/13/2016.

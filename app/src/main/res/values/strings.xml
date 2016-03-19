@@ -9,4 +9,11 @@
     <string name="or">--or--</string>
     <string name="locate_me">Locate me</string>
     <string name="weather_forecast_caps">WEATHER FORECAST</string>
+    <string name="city_name">Pune, IN</string>
+    <string name="default_date">18th March 2016</string>
+    <string name="default_humidity">Humidity : 90%</string>
+    <string name="default_pressure">Pressure : 950.11 hPa</string>
+    <string name="default_weather">Clear sky</string>
+    <string name="default_max_temp">Max : 12 C</string>
+    <string name="default_min_temp">Min : 12 C</string>
 </resources>

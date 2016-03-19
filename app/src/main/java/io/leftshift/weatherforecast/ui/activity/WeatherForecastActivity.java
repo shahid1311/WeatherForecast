@@ -1,12 +1,9 @@
 package io.leftshift.weatherforecast.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -38,7 +35,6 @@ import io.leftshift.weatherforecast.util.WeatherApplication;
 public class WeatherForecastActivity extends AppCompatActivity {
 
     private static final Logger logger = new Logger(WeatherForecastActivity.class.getName());
-    private CitiesPageViewerAdapter mAdapter;
     private ViewPager mPager;
     private ArrayList<WeatherForecastResponseBean> citiesForecast;
     private int responseCount = 0;
@@ -54,23 +50,15 @@ public class WeatherForecastActivity extends AppCompatActivity {
 
         citiesForecast = new ArrayList<>();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity if it has not been minimized
-                isLocationBased =  getIntent().getBooleanExtra(AppConstants.IS_LOCATION_BASED, false);
-                if (!isLocationBased) {
-                    ArrayList<String> cityList = getIntent().getStringArrayListExtra(AppConstants.CITYLIST);
-                    fetchCitiesData(cityList);
-                } else {
-                    LatLongCoordBean latLongCoordBean = (LatLongCoordBean) getIntent()
-                            .getSerializableExtra(AppConstants.USER_LATLONG);
-                    fetchCurrentLocation(latLongCoordBean);
-                }
-            }
-        }, 500);
-
+        isLocationBased = getIntent().getBooleanExtra(AppConstants.IS_LOCATION_BASED, false);
+        if (!isLocationBased) {
+            ArrayList<String> cityList = getIntent().getStringArrayListExtra(AppConstants.CITYLIST);
+            fetchCitiesWeatherData(cityList);
+        } else {
+            LatLongCoordBean latLongCoordBean = (LatLongCoordBean) getIntent()
+                    .getSerializableExtra(AppConstants.USER_LATLONG);
+            fetchCurrentLocationWeather(latLongCoordBean);
+        }
     }
 
     private void initializeUI() {
@@ -87,7 +75,11 @@ public class WeatherForecastActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchCurrentLocation(final LatLongCoordBean latLongCoordBean) {
+    /**
+     * Add the Volley request in queue for fetching weather data based on Coords
+     * @param latLongCoordBean - LatLongCoordBean containing the user's current data
+     */
+    private void fetchCurrentLocationWeather(final LatLongCoordBean latLongCoordBean) {
         if (latLongCoordBean == null) {
             return;
         }
@@ -128,8 +120,11 @@ public class WeatherForecastActivity extends AppCompatActivity {
         WeatherApplication.getInstance().addToRequestQueue(request);
     }
 
-
-    private void fetchCitiesData(final ArrayList<String> cityList) {
+    /**
+     * Add the Volley request in queue for fetching weather data based on Cities
+     * @param cityList - ArrayList<String> cotaining city list
+     */
+    private void fetchCitiesWeatherData(final ArrayList<String> cityList) {
         if (cityList == null || cityList.size() <= 0) {
             return;
         }
@@ -179,14 +174,18 @@ public class WeatherForecastActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Once the data is fetched, initialize the ViewPager and set cities
+     */
     private void initializeViewPager() {
-        mAdapter = new CitiesPageViewerAdapter(getSupportFragmentManager(), citiesForecast,
+        CitiesPageViewerAdapter mAdapter = new CitiesPageViewerAdapter(getSupportFragmentManager(), citiesForecast,
                 WeatherForecastActivity.this);
 
         mPager.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-        if(!isLocationBased) {
+        //Set the Circular Page indicator based on location or cities
+        if (!isLocationBased) {
             int pageCount = mAdapter.getCount();
             if (pageCount > 0) {
                 LinearLayout indicatorLayout = (LinearLayout) findViewById(R.id.circular_indicator_layout);

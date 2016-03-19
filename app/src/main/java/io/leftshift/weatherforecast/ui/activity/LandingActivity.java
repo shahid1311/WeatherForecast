@@ -7,16 +7,10 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 
@@ -26,7 +20,6 @@ import io.leftshift.weatherforecast.logger.Logger;
 import io.leftshift.weatherforecast.ui.dialog.CustomProgressDialog;
 import io.leftshift.weatherforecast.ui.dialog.DialogFactory;
 import io.leftshift.weatherforecast.util.AppConstants;
-import io.leftshift.weatherforecast.util.DateUtil;
 import io.leftshift.weatherforecast.util.GeoLocation;
 import io.leftshift.weatherforecast.util.WeatherUtility;
 
@@ -72,21 +65,17 @@ public class LandingActivity extends AppCompatActivity {
                 validateAndSubmitCities();
             }
         });
-        /*etCityNames.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
-                        || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    validateAndSubmitCities();
-                }
-                return false;
-            }
-        });*/
     }
 
+    /**
+     * This method validates useer input in the cities field and then submits it for fetching weather details
+     */
     private void validateAndSubmitCities() {
         String cityNames = etCityNames.getText().toString();
         if (cityNames.length() > 0) {
             ArrayList<String> cities = new ArrayList<>();
+
+            //Split city names based on ','
             String[] splitCities = cityNames.split(",");
             for (int i = 0; i < splitCities.length; i++) {
                 if (splitCities[i].trim().length() > 0)
@@ -94,13 +83,15 @@ public class LandingActivity extends AppCompatActivity {
             }
 
             if (cities.size() > 0) {
+                //If the city list size  created is greater than 0,
+                // then check for network connection and proceed further
                 if (WeatherUtility.isNetworkConnected(LandingActivity.this)) {
                     callWeatherForeCastActivity(cities);
                 } else {
                     Toast.makeText(LandingActivity.this, getString(R.string.not_connected),
                             Toast.LENGTH_SHORT).show();
                 }
-            }else{
+            } else {
                 Toast.makeText(LandingActivity.this,
                         getString(R.string.enter_valid_cities), Toast.LENGTH_SHORT).show();
             }
@@ -114,12 +105,15 @@ public class LandingActivity extends AppCompatActivity {
      * This method checks if the user has granted permission for getting user's current latitude and longitude
      */
     private void requestForLocation() {
+        //First check if the user has already accepted and allowed the Access_coarse_location,
+        //if not then request for permission at runtime
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     AppConstants.MY_PERMISSION_ACCESS_COURSE_LOCATION);
         } else {
+            //User permission is already validated. Hence get location coords
             locateUser();
         }
     }

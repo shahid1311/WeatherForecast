@@ -1,6 +1,5 @@
 package io.leftshift.weatherforecast.util;
 
-
 import android.app.Application;
 import android.text.TextUtils;
 
@@ -71,7 +70,7 @@ public class WeatherApplication extends Application {
         // set the default tag if tag is empty
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
 
-        logger.debug("Adding request to queue: %s"+ req.getUrl());
+        logger.debug("Adding request to queue: %s" + req.getUrl());
 
         getRequestQueue().add(req);
     }

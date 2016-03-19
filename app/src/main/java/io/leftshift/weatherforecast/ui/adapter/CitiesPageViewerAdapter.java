@@ -40,11 +40,4 @@ public class CitiesPageViewerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return this.citiesWeatherBean.size();
     }
-
-    public void setCount(int count) {
-        if (count > 0 && count <= 10) {
-            mCount = count;
-            notifyDataSetChanged();
-        }
-    }
 }

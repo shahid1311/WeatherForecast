@@ -44,50 +44,6 @@ public class DialogUtil {
     }
 
 
-/*    *//**
-     * This method creates an AlertDialog to confirm delete contacts
-     * @param contactName - Name to be displayed in the alert dialog
-     * @param deleteContactListener - Listener which returns back the delete confirmation
-     *//*
-    public void showDeleteContactAlertDialog(String contactName
-            , DialogInterface.OnClickListener deleteContactListener){
-        if(mActivity!=null){
-            AlertDialog alertDialog = DialogFactory.createAlertDialogWithButtons(mActivity,
-                    mActivity.getString(R.string.delete_contact),
-                    mActivity.getString(R.string.delet_contact_message, contactName),
-                    mActivity.getString(R.string.delete),
-                    mActivity.getString(R.string.cancel),
-                    deleteContactListener,
-                    getOkDialogOnClickListener());
-
-            alertDialog.show();
-
-            Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-            if(positiveButton!=null){
-                positiveButton.setTextColor(mActivity.getResources()
-                        .getColor(android.R.color.holo_red_dark));
-            }
-        }
-    }
-
-
-    *//**
-     *
-     * @param countryList
-     * @param selectedCountryLocation
-     *//*
-    public void showCountryCodeDialog(ArrayList<String> countryList, int selectedCountryLocation,
-                                      DialogInterface.OnClickListener dialogListener){
-        if(mActivity!=null){
-            AlertDialog alertDialog = DialogFactory.createSingleChoiceAlertDialog(mActivity,
-                    countryList, selectedCountryLocation, mActivity.getString(R.string.select_country),
-                    mActivity.getString(R.string.ok),  dialogListener);
-
-
-            alertDialog.show();
-        }
-    }*/
-
     /**
      * This listener is for dismissing the dialog for Ok button
      * @return - DialogInterface.OnClickListener which dismissed the dialog in onClick

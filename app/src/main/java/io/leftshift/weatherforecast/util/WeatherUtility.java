@@ -39,6 +39,11 @@ public class WeatherUtility {
         return px;
     }
 
+    /**
+     * This method checks and returns if the user is connected to the internet or not
+     * @param context - Context of the current activity
+     * @return - boolean value true if network is connected else false
+     */
     public static boolean isNetworkConnected(Context context){
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

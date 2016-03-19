@@ -1,10 +1,7 @@
 package io.leftshift.weatherforecast.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Created by shahid on 31/8/15.
+ * Created by shahid on 3/12/16.
  */
 public class AppConstants {
 
@@ -33,7 +30,4 @@ public class AppConstants {
         public static final String METRIC = "metric";
     }
 
-    public class PrefClass {
-        public static final String WEATHER_DATA = "weather_data";
-    }
 }

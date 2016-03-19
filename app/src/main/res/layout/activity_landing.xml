@@ -5,7 +5,7 @@
     android:background="@drawable/bg"
     android:padding="15dp">
 
-    <io.leftshift.weatherforecast.ui.customviews.CustomTextView
+    <TextView
         android:id="@+id/app_name"
         style="@style/default_text"
         android:layout_height="100dp"
@@ -14,14 +14,16 @@
         android:layout_centerHorizontal="true"
         android:textSize="40sp"/>
 
-    <io.leftshift.weatherforecast.ui.customviews.CustomTextView
+    <TextView
         android:id="@+id/get_started"
         style="@style/default_text"
         android:text="@string/get_started"
-        android:layout_centerInParent="true"
-        android:textSize="28sp" />
+        android:layout_below="@id/app_name"
+        android:layout_centerHorizontal="true"
+        android:textSize="28sp"
+        android:layout_marginTop="60dp"/>
 
-    <io.leftshift.weatherforecast.ui.customviews.CustomTextView
+    <TextView
         android:id="@+id/cities_you_want"
         style="@style/default_text"
         android:layout_below="@id/get_started"
@@ -30,25 +32,39 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"/>
 
-    <io.leftshift.weatherforecast.ui.customviews.CustomEditText
+    <EditText
         android:id="@+id/et_city_names"
         style="@style/default_edit_text"
         android:layout_below="@id/cities_you_want"
         android:hint="@string/pune_mumbai"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:maxLength="150"
+        android:imeOptions="actionDone"
+        android:inputType="textCapWords"/>
 
-    <io.leftshift.weatherforecast.ui.customviews.CustomTextView
+    <Button
+        android:id="@+id/btn_done"
+        style="@style/default_button"
+        android:layout_below="@id/et_city_names"
+        android:text="@string/done"
+        android:textSize="22sp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent_black_50" />
+
+    <TextView
         android:id="@+id/tv_or"
         style="@style/default_text"
-        android:layout_below="@id/et_city_names"
+        android:layout_below="@id/btn_done"
         android:text="@string/or"
         android:textSize="22sp"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"/>
 
-    <io.leftshift.weatherforecast.ui.customviews.CustomButton
+    <Button
         android:id="@+id/btn_locate_me"
         style="@style/default_button"
         android:layout_below="@id/tv_or"

@@ -1,10 +1,14 @@
 package io.leftshift.weatherforecast.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -22,6 +26,7 @@ import io.leftshift.weatherforecast.bean.WeatherForecastResponseBean;
 import io.leftshift.weatherforecast.connection.http.VolleyUtil;
 import io.leftshift.weatherforecast.logger.Logger;
 import io.leftshift.weatherforecast.ui.adapter.CitiesPageViewerAdapter;
+import io.leftshift.weatherforecast.ui.customviews.CircularPageIndicator;
 import io.leftshift.weatherforecast.ui.dialog.CustomProgressDialog;
 import io.leftshift.weatherforecast.ui.dialog.DialogFactory;
 import io.leftshift.weatherforecast.util.AppConstants;
@@ -38,6 +43,7 @@ public class WeatherForecastActivity extends AppCompatActivity {
     private ArrayList<WeatherForecastResponseBean> citiesForecast;
     private int responseCount = 0;
     private CustomProgressDialog customProgressDialog;
+    boolean isLocationBased;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +54,23 @@ public class WeatherForecastActivity extends AppCompatActivity {
 
         citiesForecast = new ArrayList<>();
 
-        boolean isLocationBased = getIntent().getBooleanExtra(AppConstants.IS_LOCATION_BASED, false);
-        if (!isLocationBased) {
-            ArrayList<String> cityList = getIntent().getStringArrayListExtra(AppConstants.CITYLIST);
-            fetchCitiesData(cityList);
-        } else {
-            LatLongCoordBean latLongCoordBean = (LatLongCoordBean) getIntent()
-                    .getSerializableExtra(AppConstants.USER_LATLONG);
-            fetchCurrentLocation(latLongCoordBean);
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                // Start your app main activity if it has not been minimized
+                isLocationBased =  getIntent().getBooleanExtra(AppConstants.IS_LOCATION_BASED, false);
+                if (!isLocationBased) {
+                    ArrayList<String> cityList = getIntent().getStringArrayListExtra(AppConstants.CITYLIST);
+                    fetchCitiesData(cityList);
+                } else {
+                    LatLongCoordBean latLongCoordBean = (LatLongCoordBean) getIntent()
+                            .getSerializableExtra(AppConstants.USER_LATLONG);
+                    fetchCurrentLocation(latLongCoordBean);
+                }
+            }
+        }, 500);
+
     }
 
     private void initializeUI() {
@@ -171,13 +185,31 @@ public class WeatherForecastActivity extends AppCompatActivity {
 
         mPager.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        if(!isLocationBased) {
+            int pageCount = mAdapter.getCount();
+            if (pageCount > 0) {
+                LinearLayout indicatorLayout = (LinearLayout) findViewById(R.id.circular_indicator_layout);
+                CircularPageIndicator circularPageIndicator = new CircularPageIndicator(
+                        this, indicatorLayout);
+                circularPageIndicator.createPageIndicator(pageCount, 0);
+                mPager.addOnPageChangeListener(circularPageIndicator);
+            }
+        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Called when user has pressed back on top of the Action Bar
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void showProgressDialog() {

@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.leftshift.weatherforecast.bean.LatLongCoordBean;
 import io.leftshift.weatherforecast.logger.Logger;
 import io.leftshift.weatherforecast.util.AppConstants;
 
@@ -28,24 +29,28 @@ public class VolleyUtil {
         String requestUrl = AppConstants.URL.SERVER_URL+AppConstants.URL.CITY_WEATHER_NAME_PATH
                 +AppConstants.QUERY_PARAMS.CITY_NAME+"="+city
                 +"&"+AppConstants.QUERY_PARAMS.COUNT+"="+AppConstants.QUERY_PARAMS.NO_OF_DAYS
-                +"&"+AppConstants.QUERY_PARAMS.APP_ID+"="+AppConstants.ApiKeys.APP_ID;
+                +"&"+AppConstants.QUERY_PARAMS.APP_ID+"="+AppConstants.ApiKeys.APP_ID
+                +"&"+AppConstants.QUERY_PARAMS.UNITS+"="+AppConstants.QUERY_PARAMS.METRIC;
 
         logger.debug("City weather Request URL : "+requestUrl);
 
         return new JsonObjectRequest(requestUrl, onResponseListener, volleyErrorListener);
     }
 
-    public ArrayList<JsonObjectRequest> getCitiesWeather(ArrayList<String> cities,
-                                            ArrayList<Response.Listener<JSONObject>> onResponseListenerList,
-                                            ArrayList<Response.ErrorListener> volleyErrorListenerList){
-        ArrayList<JsonObjectRequest> requestList = new ArrayList<>();
-        for(int i=0; i<cities.size(); i++){
-            JsonObjectRequest request = getCityWeather(cities.get(i), onResponseListenerList.get(0),
-                    volleyErrorListenerList.get(0));
-            requestList.add(request);
-        }
+    public JsonObjectRequest getCityWeatherFromLatLong(LatLongCoordBean latLongBean,
+                                            Response.Listener<JSONObject> onResponseListener,
+                                            Response.ErrorListener volleyErrorListener){
 
-        return requestList;
+        String requestUrl = AppConstants.URL.SERVER_URL+AppConstants.URL.CITY_WEATHER_NAME_PATH
+                +AppConstants.QUERY_PARAMS.LATITUDE+"="+latLongBean.lat
+                +"&"+AppConstants.QUERY_PARAMS.LONGITUDE+"="+latLongBean.lon
+                +"&"+AppConstants.QUERY_PARAMS.COUNT+"="+AppConstants.QUERY_PARAMS.NO_OF_DAYS
+                +"&"+AppConstants.QUERY_PARAMS.APP_ID+"="+AppConstants.ApiKeys.APP_ID
+                +"&"+AppConstants.QUERY_PARAMS.UNITS+"="+AppConstants.QUERY_PARAMS.METRIC;
+
+        logger.debug("City Latlong weather Request URL : "+requestUrl);
+
+        return new JsonObjectRequest(requestUrl, onResponseListener, volleyErrorListener);
     }
 
 

@@ -5,6 +5,10 @@ package io.leftshift.weatherforecast.util;
  */
 public class AppConstants {
 
+    public static final String CITYLIST = "city_list";
+    public static final String IS_LOCATION_BASED = "is_location_based";
+    public static final String USER_LATLONG = "user_lat_long";
+
     public static final class ApiKeys {
         public static final String APP_ID = "12be7936504c00ca7430246833f96e3e";
     }
@@ -21,6 +25,8 @@ public class AppConstants {
         public static final String LATITUDE = "lat";
         public static final String LONGITUDE = "lon";
         public static final String CITY_NAME = "q";
+        public static final String UNITS = "units";
+        public static final String METRIC = "metric";
     }
 
     public class PrefClass {
